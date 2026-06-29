@@ -1,4 +1,5 @@
 import express from "express";
+import sequelize from "./src/config/database.js";
 
 const app = express();
 
@@ -8,11 +9,14 @@ const PORT = 3000;
 
 const startServer = async () => {
   try {
-    app.listen(PORT, function() {
+    await sequelize.authenticate();
+    console.log("Conexion a la base de datos exitosa.");
+    
+    app.listen(PORT, () => {
       console.log("Servidor corriendo en http://localhost:" + PORT);
     });
   } catch (error) {
-    console.log("Error al iniciar el servidor:", error);
+    console.log("Error al conectar a la base de datos:", error);
   }
 };
 
